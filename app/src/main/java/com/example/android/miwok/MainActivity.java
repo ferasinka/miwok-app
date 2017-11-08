@@ -1,30 +1,29 @@
 package com.example.android.miwok;
 
-import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_main);
 
-        // Numbers listener
-        TextView numbersTextView = findViewById(R.id.numbers);
-        numbersTextView.setOnClickListener(v -> startActivity(new Intent(this, NumbersActivity.class)));
+        // Find the view pager that will allow the user to swipe between fragments
+        ViewPager viewPager = findViewById(R.id.viewpager);
 
-        // Family listener
-        TextView familyTextView = findViewById(R.id.family);
-        familyTextView.setOnClickListener(v -> startActivity(new Intent(this, FamilyActivity.class)));
+        // Create an adapter that knows which fragment should be shown on each page
+        CategoryAdapter adapter = new CategoryAdapter(getSupportFragmentManager(), this);
 
-        // Colors listener
-        TextView colorsTextView = findViewById(R.id.colors);
-        colorsTextView.setOnClickListener(v -> startActivity(new Intent(this, ColorsActivity.class)));
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
 
-        // Phrases listener
-        TextView phrasesTextView = findViewById(R.id.phrases);
-        phrasesTextView.setOnClickListener(v -> startActivity(new Intent(this, PhrasesActivity.class)));
+        // Give the TabLayout the ViewPager
+        TabLayout tabLayout = findViewById(R.id.sliding_tabs);
+        tabLayout.setupWithViewPager(viewPager);
     }
 }
